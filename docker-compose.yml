@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+# PostgreSQL Datenbank
+postgres_db:
+image: postgres:15-alpine
+container_name: incident_db
+restart: always
+environment:
+POSTGRES_USER: devops_user
+POSTGRES_PASSWORD: devops_password
+POSTGRES_DB: incident_tracker
+ports:
+- "5432:5432"
+volumes:
+- pgdata:/var/lib/postgresql/data
+
+# Backend-Dienst
+backend:
+build: ./backend
+container_name: incident_backend
+restart: always
+ports:
+- "5000:5000"
+environment:
+PORT: 5000
+DATABASE_URL: postgres://devops_user:devops_password@postgres_db:5432/incident_tracker
+depends_on:
+- postgres_db
+
+volumes:
+pgdata:
