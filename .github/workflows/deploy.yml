@@ -1,5 +1,3 @@
-
-
 name: CI/CD Incident Tracker Pipeline
 
 on:
@@ -13,19 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Quellcode auschecken
-      uses: actions/checkout@v3
+      - name: Quellcode auschecken
+        uses: actions/checkout@v4
 
-    - name: Node.js Umgebung einrichten
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Node.js Umgebung einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Backend Abhaengigkeiten installieren
-      run: |
-        cd backend
-        npm install
+      - name: Backend Abhaengigkeiten installieren
+        run: |
+          cd backend
+          npm install
 
-    - name: Docker Compose Test-Build
-      run: |
-        docker-compose config
+      - name: Docker Compose Validierung
+        run: |
+          docker compose config
